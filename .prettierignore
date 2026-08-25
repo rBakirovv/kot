@@ -1,0 +1,29 @@
+# Зависимости и сборки
+node_modules
+.next
+out
+build
+dist
+
+# Prisma
+prisma/migrations
+src/generated
+
+# Автогенерируемое
+next-env.d.ts
+*.tsbuildinfo
+
+# Логи и локальные файлы
+*.log
+.env*
+.vercel
+.DS_Store
+
+# Лок-файлы
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Документация для агентов
+CLAUDE.md
+AGENTS.md
