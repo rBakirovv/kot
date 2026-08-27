@@ -7,7 +7,7 @@ import { ThemeProvider } from '@/shared/lib/theme-provider';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'Kot',
+  title: 'Кот',
   description:
     'Образовательная платформа с курсами, уроками и отслеживанием прогресса',
 };

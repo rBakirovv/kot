@@ -15,7 +15,7 @@ export function Header() {
             className="text-foreground flex items-center gap-2 text-lg font-medium"
           >
             <Cat className="size-6" strokeWidth={2} />
-            Kot
+            Кот
           </Link>
 
           <div className="ml-auto flex items-center gap-2">
