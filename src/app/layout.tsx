@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/shared/lib/utils';
+import { ThemeProvider } from '@/shared/lib/theme-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -14,16 +15,20 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
-      lang="en"
-      className={cn(
-        'h-full',
-        'antialiased',
-        'font-sans',
-        'font-sans',
-        inter.variable,
-      )}
+      lang="ru"
+      suppressHydrationWarning
+      className={cn('h-full', 'antialiased', 'font-sans', inter.variable)}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
