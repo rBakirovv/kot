@@ -11,6 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
+    "compiler:check": "npx react-compiler-healthcheck@latest",
     "auth:generate": "auth generate --output prisma/schema.prisma --yes",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",

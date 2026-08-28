@@ -52,7 +52,7 @@ function FieldGroup({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 const fieldVariants = cva(
-  'group/field flex w-full gap-3 data-[invalid=true]:text-destructive',
+  'group/field flex w-full gap-3 data-[invalid=true]:text-destructive has-[[role=checkbox]]:cursor-pointer has-[[role=checkbox]]:*:cursor-pointer has-[[role=checkbox]:disabled]:cursor-not-allowed has-[[role=checkbox]:disabled]:*:cursor-not-allowed',
   {
     variants: {
       orientation: {

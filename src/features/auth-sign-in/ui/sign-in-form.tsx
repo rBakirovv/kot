@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from '@/shared/components/ui/card';
 import { Input } from '@/shared/components/ui/input';
+import { Checkbox } from '@/shared/components/ui/checkbox';
 import {
   Field,
   FieldError,
@@ -32,6 +33,7 @@ export function SignInForm() {
     defaultValues: {
       email: '',
       password: '',
+      rememberMe: false,
     },
   });
 
@@ -39,6 +41,7 @@ export function SignInForm() {
     const { error } = await authClient.signIn.email({
       email: values.email,
       password: values.password,
+      rememberMe: values.rememberMe,
     });
 
     if (error) {
@@ -100,6 +103,29 @@ export function SignInForm() {
                     aria-invalid={fieldState.invalid}
                     autoComplete="current-password"
                   />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="rememberMe"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field
+                  orientation="horizontal"
+                  data-invalid={fieldState.invalid}
+                >
+                  <Checkbox
+                    id="remember-me"
+                    checked={field.value}
+                    onCheckedChange={(checked) => field.onChange(checked)}
+                    onBlur={field.onBlur}
+                    inputRef={field.ref}
+                    aria-invalid={fieldState.invalid}
+                  />
+                  <FieldLabel htmlFor="remember-me">Запомнить меня</FieldLabel>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
