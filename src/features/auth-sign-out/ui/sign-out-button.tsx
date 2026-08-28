@@ -26,7 +26,7 @@ export function SignOutButton() {
       onClick={handleSignOut}
       disabled={pending}
     >
-      <LogOut className="text-destructive h-[1.2rem] w-[1.2rem]" />
+      <LogOut className="text-destructive" />
       <span className="sr-only">Выйти</span>
     </Button>
   );
