@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
 import { DrawerClose } from '@/shared/components/ui/drawer';
 import { cn } from '@/shared/lib/utils';
 import type { NavItem } from '../../model/navigation-items';
