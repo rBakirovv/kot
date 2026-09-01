@@ -11,6 +11,12 @@ import { useQuery } from '@tanstack/react-query';
 import { MessageCircle } from 'lucide-react';
 import { ConversationItem } from './conversation-item';
 import { ConversationItemSkeleton } from './conversation-item-skeleton';
+import { AlertCircleIcon, AlertTriangleIcon } from 'lucide-react';
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from '@/shared/components/ui/alert';
 
 export function ConversationList() {
   const { data: users, isPending, error } = useQuery(usersQuery);
@@ -26,14 +32,21 @@ export function ConversationList() {
         </CardTitle>
       </CardHeader>
       <CardContent className="min-h-0 flex-1 overflow-y-auto">
-        {isPending && (
-          <ConversationItemSkeleton />
+        {isPending && <ConversationItemSkeleton />}
+
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircleIcon />
+            <AlertTitle>Произошла ошибка</AlertTitle>
+            <AlertDescription>{error.message}</AlertDescription>
+          </Alert>
         )}
 
-        {error && <p className="text-destructive text-sm">{error.message}</p>}
-
         {users?.length === 0 && (
-          <p className="text-muted-foreground text-sm">Пользователи не найдены</p>
+          <Alert>
+            <AlertTriangleIcon />
+            <AlertTitle>Пользователи не найдены</AlertTitle>
+          </Alert>
         )}
 
         {users && users.length > 0 && (
