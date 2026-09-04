@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { LogOut } from 'lucide-react';
 
 import { authClient } from '@/shared/lib/auth-client';
@@ -9,11 +10,13 @@ import { Button } from '@/shared/components/ui/button';
 
 export function SignOutButton() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [pending, setPending] = useState(false);
 
   async function handleSignOut() {
     setPending(true);
     await authClient.signOut();
+    queryClient.clear();
     router.push('/sign-in');
     router.refresh();
   }

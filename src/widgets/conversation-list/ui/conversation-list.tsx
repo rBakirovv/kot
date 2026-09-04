@@ -1,6 +1,5 @@
 'use client';
 
-import { usersQuery } from '@/entities/user/api/fetch-users';
 import {
   Card,
   CardHeader,
@@ -8,18 +7,22 @@ import {
   CardContent,
 } from '@/shared/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
-import { MessageCircle } from 'lucide-react';
+import { AlertCircleIcon, MessageCircle } from 'lucide-react';
 import { ConversationItem } from './conversation-item';
 import { ConversationItemSkeleton } from './conversation-item-skeleton';
-import { AlertCircleIcon, AlertTriangleIcon } from 'lucide-react';
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from '@/shared/components/ui/alert';
+import { conversationsQuery } from '@/entities/conversation';
 
 export function ConversationList() {
-  const { data: users, isPending, error } = useQuery(usersQuery);
+  const {
+    data: conversations,
+    isPending,
+    error,
+  } = useQuery(conversationsQuery);
 
   return (
     <Card className="h-full">
@@ -32,7 +35,13 @@ export function ConversationList() {
         </CardTitle>
       </CardHeader>
       <CardContent className="min-h-0 flex-1 overflow-y-auto">
-        {isPending && <ConversationItemSkeleton />}
+        {isPending && (
+          <div className="flex flex-col gap-1">
+            {Array.from({ length: 3 }, (_, index) => (
+              <ConversationItemSkeleton key={index} />
+            ))}
+          </div>
+        )}
 
         {error && (
           <Alert variant="destructive">
@@ -42,17 +51,20 @@ export function ConversationList() {
           </Alert>
         )}
 
-        {users?.length === 0 && (
-          <Alert>
-            <AlertTriangleIcon />
-            <AlertTitle>Пользователи не найдены</AlertTitle>
-          </Alert>
+        {conversations?.length === 0 && (
+          <div className="text-muted-foreground flex h-full flex-col items-center justify-center gap-3">
+            <MessageCircle className="size-10 opacity-40" strokeWidth={1.5} />
+            <p className="text-sm">Пока нет чатов</p>
+          </div>
         )}
 
-        {users && users.length > 0 && (
+        {conversations && conversations.length > 0 && (
           <ul className="-mx-2 flex flex-col gap-1">
-            {users.map((user) => (
-              <ConversationItem key={user.id} user={user} />
+            {conversations.map((conversation) => (
+              <ConversationItem
+                key={conversation.id}
+                conversation={conversation}
+              />
             ))}
           </ul>
         )}

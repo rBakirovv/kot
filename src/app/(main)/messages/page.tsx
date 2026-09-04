@@ -1,11 +1,11 @@
 import { headers } from 'next/headers';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { usersQuery } from '@/entities/user/api/fetch-users';
-import { getUsers } from '@/entities/user/api/get-users';
 import { auth } from '@/shared/lib/auth';
 import { getQueryClient } from '@/shared/lib/query-client';
-import { ConversationList } from '@/widgets/conversation-list/';
+import { ConversationList } from '@/widgets/conversation-list';
 import { ConversationView } from '@/widgets/conversation-view';
+import { conversationsQuery } from '@/entities/conversation';
+import { getConversations } from '@/entities/conversation/server';
 
 export default async function MessagesPage() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -13,9 +13,10 @@ export default async function MessagesPage() {
 
   const queryClient = getQueryClient();
   await queryClient
+    // eslint-disable-next-line @tanstack/query/exhaustive-deps
     .query({
-      queryKey: usersQuery.queryKey,
-      queryFn: () => getUsers(session.user.id),
+      queryKey: conversationsQuery.queryKey,
+      queryFn: () => getConversations(session.user.id),
     })
     .catch(() => {});
 

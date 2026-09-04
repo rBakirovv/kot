@@ -1,13 +1,10 @@
-import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { auth } from '@/shared/lib/auth';
-import { getUsers } from '@/entities/user/api/get-users';
+import { getApiSession } from '@/shared/lib/api-guard';
+import { getUsers } from '@/entities/user/server';
 
 export async function GET() {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (!session) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  const { session, response } = await getApiSession();
+  if (response) return response;
 
   const users = await getUsers(session.user.id);
   return NextResponse.json(users);

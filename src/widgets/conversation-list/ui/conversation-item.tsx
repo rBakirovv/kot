@@ -1,7 +1,11 @@
-import type { User } from '@/entities/user/model/types';
+import { ConversationListItem } from '@/entities/conversation';
 import { getInitials } from '@/shared/lib/utils';
 
-export function ConversationItem({ user }: { user: User }) {
+export function ConversationItem({
+  conversation,
+}: {
+  conversation: ConversationListItem;
+}) {
   return (
     <li>
       <button
@@ -12,9 +16,16 @@ export function ConversationItem({ user }: { user: User }) {
           aria-hidden
           className="bg-muted text-muted-foreground group-hover/item:bg-background flex size-9 shrink-0 items-center justify-center rounded-full text-xs font-medium transition-colors duration-200"
         >
-          {getInitials(user.name)}
+          {getInitials(conversation.peer.name)}
         </span>
-        <span className="truncate text-sm font-medium">{user.name}</span>
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="truncate text-sm font-medium">
+            {conversation.peer.name}
+          </span>
+          <span className="text-muted-foreground truncate text-xs">
+            {conversation.lastMessage?.body}
+          </span>
+        </div>
       </button>
     </li>
   );

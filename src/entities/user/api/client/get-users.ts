@@ -1,4 +1,4 @@
-import type { User } from '../model/types';
+import type { User } from '../../model/types';
 
 export async function fetchUsers(): Promise<User[]> {
   const res = await fetch('/api/users');
